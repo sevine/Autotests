@@ -15,6 +15,6 @@ namespace Autotests.PageModel
 
         private const string lblRecentlyAdded = "//h1[text()= 'The NBC App']";
 
-        public bool IsAppPageOpened() => _driver.FindElement(By.XPath(lblRecentlyAdded)).Displayed;
+        public bool IsAppPageOpened() => _driver.FindElements(By.XPath(lblRecentlyAdded)).Count > 0;
     }
 }

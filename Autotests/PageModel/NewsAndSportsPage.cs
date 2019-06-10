@@ -15,6 +15,6 @@ namespace Autotests.PageModel
 
         private const string divNewsAndSports = "//div[@class='navigation__item__group navigation__item__group--news-sports']";
 
-        public bool IsNewsAndSportsPageOpened() => _driver.FindElement(By.XPath(divNewsAndSports)).Displayed;
+        public bool IsNewsAndSportsPageOpened() => _driver.FindElements(By.XPath(divNewsAndSports)).Count > 0;
     }
 }

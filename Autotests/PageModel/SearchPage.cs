@@ -15,6 +15,6 @@ namespace Autotests.PageModel
 
         private const string txtSearch = ".search-input__input";
 
-        public bool IsSearchPageOpened() => _driver.FindElement(By.CssSelector(txtSearch)).Displayed;
+        public bool IsSearchPageOpened() => _driver.FindElements(By.CssSelector(txtSearch)).Count > 0;
     }
 }

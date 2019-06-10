@@ -27,49 +27,56 @@ namespace Autotests.PageModel
         #endregion
 
         #region ClickMethods
-        public ShowsPage ClickOnAllTab()
+        public ShowsPage ClickAllTab()
         {
             _driver.FindElement(By.CssSelector(lnkAllTab)).Click();
-            Thread.Sleep(2 * 1000);
-            return this;
+            return WaitForPageLoaded();
         }
 
-        public ShowsPage ClickOnCurrentTab()
+        public ShowsPage ClickCurrentTab()
         {
             _driver.FindElement(By.CssSelector(lnkCurrentTab)).Click();
-            Thread.Sleep(2 * 1000);
-            return this;
+            return WaitForPageLoaded();
         }
 
-        public ShowsPage ClickOnUpcomingTab()
+        public ShowsPage ClickUpcomingTab()
         {
             _driver.FindElement(By.CssSelector(lnkUpcomingTab)).Click();
-            Thread.Sleep(2 * 1000);
-            return this;
+            return WaitForPageLoaded();
         }
 
-        public ShowsPage ClickOnThrowbackTab()
+        public ShowsPage ClickThrowbackTab()
         {
             _driver.FindElement(By.CssSelector(lnkThrowbackTab)).Click();
-            Thread.Sleep(2 * 1000);
-            return this;
+            return WaitForPageLoaded();
         }
         #endregion
 
         #region AssertMethods
-        public bool IsAllTabDisplayed() => _driver.FindElement(By.CssSelector(lblAllTab)).Displayed;
+        public bool IsAllTabDisplayed() =>_driver.FindElements(By.CssSelector(lblAllTab)).Count > 0;
 
-        public bool IsCurrentTabDisplayed() => _driver.FindElement(By.CssSelector(lblCurrentTab)).Displayed;
+        public bool IsCurrentTabDisplayed() => _driver.FindElements(By.CssSelector(lblCurrentTab)).Count > 0;
 
-        public bool IsUpcomingTabDisplayed() => _driver.FindElement(By.CssSelector(lblUpcomingTab)).Displayed;
+        public bool IsUpcomingTabDisplayed() => _driver.FindElements(By.CssSelector(lblUpcomingTab)).Count > 0;
 
-        public bool IsThrowbackTabDisplayed() => _driver.FindElement(By.CssSelector(lblThrowbackTab)).Displayed;
+        public bool IsThrowbackTabDisplayed() => _driver.FindElements(By.CssSelector(lblThrowbackTab)).Count > 0;
+
+        public bool IsSeriesDisplayed(string SeriesTextName) => _driver.FindElements(By.XPath($"//*[@class='tile__title'][text()='{SeriesTextName}']")).Count > 0;
         #endregion
 
-        public SeriesPage GoToSeriesByTitle(string SeriesTextName)
+        #region DoMethods
+        public SeriesPage GoToSeriesPageByTitle(string SeriesTextName)
         {
             _driver.FindElement(By.XPath("//div[@class = 'tile__title'][text()='" + SeriesTextName + "']")).Click();
+            Thread.Sleep(2 * 1000);
             return new SeriesPage(_driver);
         }
+
+        public ShowsPage WaitForPageLoaded()
+        {
+            Thread.Sleep(2 * 1000);
+            return this;
+        }
+        #endregion
     }
 }

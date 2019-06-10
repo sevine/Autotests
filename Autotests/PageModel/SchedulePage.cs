@@ -15,6 +15,6 @@ namespace Autotests.PageModel
 
         private const string cmpCalendar = ".schedule__days";
 
-        public bool IsSchedulePageOpened() => _driver.FindElement(By.CssSelector(cmpCalendar)).Displayed;
+        public bool IsSchedulePageOpened() => _driver.FindElements(By.CssSelector(cmpCalendar)).Count > 0;
     }
 }

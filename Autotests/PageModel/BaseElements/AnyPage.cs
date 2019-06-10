@@ -17,65 +17,64 @@ namespace Autotests.PageModel.BaseElements
         }
 
         #region locators
-        public const string lnkShows = "a[href='/shows']";
-        public const string lnkEpisodes = "a[href='/video']";
-        public const string lnkSchedule = "a[href='/schedule']";
-        public const string lnkNewsAndSports = "//span[contains(text(), 'Sport')]/..";
-        public const string lnkShop = "//span[contains(text(), 'Shop')]/..";
-        public const string lnkApp = "a[href='/apps']";
-        public const string lnkSearch = "//button[@class='navigation__search navigation__item__title']";
+        private const string lnkShows = "a[href='/shows']";
+        private const string lnkEpisodes = "a[href='/video']";
+        private const string lnkSchedule = "a[href='/schedule']";
+        private const string lnkNewsAndSports = "//span[contains(text(), 'Sport')]/..";
+        private const string lnkShop = "//span[contains(text(), 'Shop')]/..";
+        private const string lnkApp = "a[href='/apps']";
+        private const string lnkSearch = "//button[@class='navigation__search navigation__item__title']";
         #endregion
 
         #region ClickMethods
-        public ShowsPage ClickOnShowsMenuLnk()
+        public ShowsPage ClickShowsMenuLnk()
         {
             _driver.FindElement(By.CssSelector(lnkShows)).Click();
             Thread.Sleep(5 * 1000);
             return new ShowsPage(_driver);
         }
 
-        public EpisodesPage ClickOnEpisodesMenuLnk()
+        public EpisodesPage ClickEpisodesMenuLnk()
         {
             _driver.FindElement(By.CssSelector(lnkEpisodes)).Click();
             Thread.Sleep(5 * 1000);
             return new EpisodesPage(_driver);
         }
 
-        public SchedulePage ClickOnScheduleMenuLnk()
+        public SchedulePage ClickScheduleMenuLnk()
         {
             _driver.FindElement(By.CssSelector(lnkSchedule)).Click();
             Thread.Sleep(5 * 1000);
             return new SchedulePage(_driver);
         }
 
-        public NewsAndSportsPage ClickOnNewsAndSportsMenuLnk()
+        public NewsAndSportsPage ClickNewsAndSportsMenuLnk()
         {
             _driver.FindElement(By.XPath(lnkNewsAndSports)).Click();
             Thread.Sleep(5 * 1000);
             return new NewsAndSportsPage(_driver);
         }
 
-        public ShopPage ClickOnShopMenuLnk()
+        public ShopPage ClickShopMenuLnk()
         {
             _driver.FindElement(By.XPath(lnkShop)).Click();
             Thread.Sleep(5 * 1000);
             return new ShopPage(_driver);
         }
 
-        public AppPage ClickOnAppMenuLnk()
+        public AppPage ClickAppMenuLnk()
         {
             _driver.FindElement(By.CssSelector(lnkApp)).Click();
             Thread.Sleep(5 * 1000);
             return new AppPage(_driver);
         }
 
-        public SearchPage ClickOnSearchMenuLnk()
+        public SearchPage ClickSearchMenuLnk()
         {
             _driver.FindElement(By.XPath(lnkSearch)).Click();
             Thread.Sleep(5 * 1000);
             return new SearchPage(_driver);
         }
-        #endregion
 
         public NbcIndexPage GoToIndexPage()
         {
@@ -83,5 +82,6 @@ namespace Autotests.PageModel.BaseElements
             Thread.Sleep(5 * 1000);
             return new NbcIndexPage(_driver);
         }
+        #endregion
     }
 }

@@ -15,6 +15,6 @@ namespace Autotests.PageModel
 
         private const string lblRecentlyAdded = "//h2[text()='Recently Added']";
 
-        public bool IsEpisodesPageOpened() => _driver.FindElement(By.XPath(lblRecentlyAdded)).Displayed;
+        public bool IsEpisodesPageOpened() => _driver.FindElements(By.XPath(lblRecentlyAdded)).Count > 0;
     }
 }
