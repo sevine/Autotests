@@ -15,16 +15,11 @@ namespace Autotests.PageModel
         }
 
         #region locators
-        private const string lblRecentlyAdded = "//h1[text()= 'The NBC App']";
         private const string lstActorsCount = ".shelf__tiles > a";
         #endregion 
 
         #region DoMethods
-        public int GetActorsCount()
-        {
-            WaitForElementPresent(By.CssSelector(lstActorsCount));
-            return _driver.FindElements(By.CssSelector(lstActorsCount)).Count;
-        }
+        public int GetActorsCount() => _driver.FindElements(By.CssSelector(lstActorsCount)).Count;
 
         public ActorPage GoToActorPage(string actor)
         {

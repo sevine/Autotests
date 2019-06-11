@@ -102,12 +102,12 @@ namespace Autotests.Tests
             var actorTawfiq = "Hisham Tawfiq";
             var actorBoone = "Megan Boone";
 
-            Assert.That(() => new AnyPage(driver)
+            Assert.That(new AnyPage(driver)
                 .ClickShowsMenuLnk()
                 .WaitForPageLoaded()
-                .IsSeriesDisplayed(seriesTitle), Is.True.After(5 * 1000, 1000), $"Не отображается сериал: {seriesTitle}");
+                .IsSeriesDisplayed(seriesTitle), Is.True, $"Не отображается сериал: {seriesTitle}");
 
-            var castpage = new ShowsPage(driver)
+           var castpage = new ShowsPage(driver)
                 .GoToSeriesPageByTitle(seriesTitle)
                 .ClickAddToFavorites()
                 .GoToCastPage()
