@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Autotests.PageModel
 {
-    public class CastPage : BasePage
+    public class CastPage : AnyPage
     {
         public CastPage(IWebDriver driver) : base(driver)
         {
@@ -16,28 +16,31 @@ namespace Autotests.PageModel
 
         #region locators
         private const string lblRecentlyAdded = "//h1[text()= 'The NBC App']";
-        private const string lstActorsCoun = ".shelf__tiles > a";
-        private const string lnkActorPage = ".shelf__tiles > a";
+        private const string lstActorsCount = ".shelf__tiles > a";
         #endregion 
 
         #region DoMethods
         public int GetActorsCount()
         {
-            Thread.Sleep(4000);
-            return _driver.FindElements(By.CssSelector(lstActorsCoun)).Count;
+            WaitForElementPresent(By.CssSelector(lstActorsCount));
+            return _driver.FindElements(By.CssSelector(lstActorsCount)).Count;
         }
 
         public ActorPage GoToActorPage(string actor)
         {
             _driver.FindElement(By.XPath($"//*[text()='{actor}']/../../../../div/img")).Click();
-            Thread.Sleep(2000);
             return new ActorPage(_driver);
+        }
+
+        public new CastPage WaitForPageLoaded()
+        {
+            base.WaitForPageLoaded();
+            return this;
         }
         #endregion
 
         #region AssertMethods
         public bool IsActorDisplayed(string actor) => _driver.FindElements(By.XPath($"//*[@class='tile__description']//*[contains(text(), '{actor}')]")).Count > 0;
         #endregion
-
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Autotests.PageModel
 {
-    class EpisodesPage : BasePage
+    public class EpisodesPage : AnyPage
     {
         public EpisodesPage(IWebDriver driver) : base(driver)
         {
@@ -15,6 +15,12 @@ namespace Autotests.PageModel
 
         private const string lblRecentlyAdded = "//h2[text()='Recently Added']";
 
-        public bool IsEpisodesPageOpened() => _driver.FindElements(By.XPath(lblRecentlyAdded)).Count > 0;
+        public bool IsEpisodesPageOpened() => WaitForElementPresent(By.XPath(lblRecentlyAdded)) != null;
+
+        public new EpisodesPage WaitForPageLoaded()
+        {
+            base.WaitForPageLoaded();
+            return this;
+        }
     }
 }

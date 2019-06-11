@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Autotests.PageModel
 {
-    class SearchPage : BasePage
+    public class SearchPage : AnyPage
     {
         public SearchPage(IWebDriver driver) : base(driver)
         {
@@ -15,6 +15,12 @@ namespace Autotests.PageModel
 
         private const string txtSearch = ".search-input__input";
 
-        public bool IsSearchPageOpened() => _driver.FindElements(By.CssSelector(txtSearch)).Count > 0;
+        public bool IsSearchPageOpened() => WaitForElementPresent(By.CssSelector(txtSearch)) != null;
+
+        public new SearchPage WaitForPageLoaded()
+        {
+            base.WaitForPageLoaded();
+            return this;
+        }
     }
 }

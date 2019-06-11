@@ -6,18 +6,15 @@ using System.Text;
 
 namespace Autotests.PageModel
 {
-    class ShopPage : BasePage
+    public class ShopPage : AnyPage
     {
         public ShopPage(IWebDriver driver) : base(driver)
         {
             _driver = driver;
         }
 
-        private const string nbsStoreUrl = "https://www.nbcstore.com";
+        private const string nbsStoreUrl = "https://www.nbcstore.com/";
 
-        public bool IsShopPageOpened()
-        {
-            return _driver.Url.Contains(nbsStoreUrl);
-        }
+        public bool IsShopPageOpened() => WaitForElementPresent(By.CssSelector($"a[href='{nbsStoreUrl}']")) != null;
     }
 }

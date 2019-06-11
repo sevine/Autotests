@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Autotests.PageModel
 {
-    class AppPage : BasePage
+    public class AppPage : AnyPage
     {
         public AppPage(IWebDriver driver) : base(driver)
         {
@@ -15,6 +15,12 @@ namespace Autotests.PageModel
 
         private const string lblRecentlyAdded = "//h1[text()= 'The NBC App']";
 
-        public bool IsAppPageOpened() => _driver.FindElements(By.XPath(lblRecentlyAdded)).Count > 0;
+        public bool IsAppPageOpened() => WaitForElementPresent(By.XPath(lblRecentlyAdded)) != null;
+
+        public new AppPage WaitForPageLoaded()
+        {
+            base.WaitForPageLoaded();
+            return this;
+        }
     }
 }

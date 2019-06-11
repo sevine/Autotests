@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Autotests.PageModel.IndexPage
 {
-    public class NbcIndexPage : BasePage
+    public class NbcIndexPage : AnyPage
     {        
         public NbcIndexPage (IWebDriver driver) : base (driver)
         {

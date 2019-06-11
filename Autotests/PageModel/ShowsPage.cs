@@ -7,7 +7,7 @@ using Autotests.PageModel.BaseElements;
 
 namespace Autotests.PageModel
 {
-    public class ShowsPage : BasePage
+    public class ShowsPage : AnyPage
     {
         public ShowsPage(IWebDriver driver) : base(driver)
         {
@@ -53,28 +53,27 @@ namespace Autotests.PageModel
         #endregion
 
         #region AssertMethods
-        public bool IsAllTabDisplayed() =>_driver.FindElements(By.CssSelector(lblAllTab)).Count > 0;
+        public bool IsAllTabDisplayed() => WaitForElementPresent(By.CssSelector(lblAllTab)) != null;
 
-        public bool IsCurrentTabDisplayed() => _driver.FindElements(By.CssSelector(lblCurrentTab)).Count > 0;
+        public bool IsCurrentTabDisplayed() => WaitForElementPresent(By.CssSelector(lblCurrentTab)) != null;
 
-        public bool IsUpcomingTabDisplayed() => _driver.FindElements(By.CssSelector(lblUpcomingTab)).Count > 0;
+        public bool IsUpcomingTabDisplayed() => WaitForElementPresent(By.CssSelector(lblUpcomingTab)) != null;
 
-        public bool IsThrowbackTabDisplayed() => _driver.FindElements(By.CssSelector(lblThrowbackTab)).Count > 0;
+        public bool IsThrowbackTabDisplayed() => WaitForElementPresent(By.CssSelector(lblThrowbackTab)) != null;
 
-        public bool IsSeriesDisplayed(string SeriesTextName) => _driver.FindElements(By.XPath($"//*[@class='tile__title'][text()='{SeriesTextName}']")).Count > 0;
+        public bool IsSeriesDisplayed(string SeriesTextName) => WaitForElementPresent(By.XPath($"//*[@class='tile__title'][text()='{SeriesTextName}']")) != null;
         #endregion
 
         #region DoMethods
         public SeriesPage GoToSeriesPageByTitle(string SeriesTextName)
         {
-            _driver.FindElement(By.XPath("//div[@class = 'tile__title'][text()='" + SeriesTextName + "']")).Click();
-            Thread.Sleep(2 * 1000);
+            _driver.FindElement(By.XPath("//div[@class = 'tile__title'][text()='" + SeriesTextName + "']")).Click();            
             return new SeriesPage(_driver);
         }
-
-        public ShowsPage WaitForPageLoaded()
+    
+        public new ShowsPage WaitForPageLoaded()
         {
-            Thread.Sleep(2 * 1000);
+            base.WaitForPageLoaded();
             return this;
         }
         #endregion

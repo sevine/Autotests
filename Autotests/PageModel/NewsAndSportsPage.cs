@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Autotests.PageModel
 {
-    class NewsAndSportsPage : BasePage
+    public class NewsAndSportsPage : AnyPage
     {
         public NewsAndSportsPage(IWebDriver driver) : base(driver)
         {
@@ -15,6 +15,12 @@ namespace Autotests.PageModel
 
         private const string divNewsAndSports = "//div[@class='navigation__item__group navigation__item__group--news-sports']";
 
-        public bool IsNewsAndSportsPageOpened() => _driver.FindElements(By.XPath(divNewsAndSports)).Count > 0;
+        public bool IsNewsAndSportsPageOpened() => WaitForElementPresent(By.XPath(divNewsAndSports)) != null;
+
+        public new NewsAndSportsPage WaitForPageLoaded()
+        {
+            base.WaitForPageLoaded();
+            return this;
+        }
     }
 }

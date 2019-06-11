@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Autotests.PageModel
 {
-    public class SeriesPage : BasePage
+    public class SeriesPage : AnyPage
     {
         public SeriesPage(IWebDriver driver) : base(driver)
         {
@@ -26,15 +26,13 @@ namespace Autotests.PageModel
         #region ClickMethods
         public SeriesPage ClickAddToFavorites()
         {
-            Thread.Sleep(3000);
-            _driver.FindElement(By.CssSelector(btnAddToFavorites)).Click();
+            WaitForElementPresent(By.CssSelector(btnAddToFavorites)).Click();
             return this;
         }
 
         public CastPage GoToCastPage()
         {
             _driver.FindElement(By.CssSelector(lnkCast)).Click();
-            Thread.Sleep(3000);
             return new CastPage(_driver);
         }
         #endregion

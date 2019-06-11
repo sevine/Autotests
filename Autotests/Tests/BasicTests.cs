@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using Autotests.PageModel;
 using Autotests.PageModel.BaseElements;
 using OpenQA.Selenium;
+using Autotests.PageModel.IndexPage;
 
 namespace Autotests.Tests
 {
@@ -18,6 +19,7 @@ namespace Autotests.Tests
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             new AnyPage(driver).GoToIndexPage();
+            new NbcIndexPage(driver).WaitForPageLoaded();
         }
 
         [TearDown]
@@ -29,7 +31,7 @@ namespace Autotests.Tests
         [Test]
         public void MenuNavigationOnShowsPageTest()
         {
-            Assert.That(new AnyPage(driver)
+            Assert.That(new NbcIndexPage(driver)
                 .ClickShowsMenuLnk()
                 .IsAllTabDisplayed(), Is.True, "Не открылась таба All");
 
@@ -55,60 +57,68 @@ namespace Autotests.Tests
         {
             Assert.That(new AnyPage(driver)
                 .ClickEpisodesMenuLnk()
+                .WaitForPageLoaded()
                 .IsEpisodesPageOpened(), Is.True, "Не открылась страница Episodes");
 
             Assert.That(new AnyPage(driver)
                 .ClickScheduleMenuLnk()
+                .WaitForPageLoaded()
                 .IsSchedulePageOpened(), Is.True, "Не открылась страница Schedule");
 
             Assert.That(new AnyPage(driver)
                 .ClickNewsAndSportsMenuLnk()
+                .WaitForPageLoaded()
                 .IsNewsAndSportsPageOpened(), Is.True, "Не открылась страница News&Sports");
 
             Assert.That(new AnyPage(driver)
                .ClickShopMenuLnk()
                .IsShopPageOpened(), Is.True, "Не открылась страница Shop");
 
-            new AnyPage(driver).GoToIndexPage();
+            new AnyPage(driver).GoToIndexPage().WaitForPageLoaded();
 
             Assert.That(new AnyPage(driver)
                 .ClickAppMenuLnk()
+                .WaitForPageLoaded()
                 .IsAppPageOpened(), Is.True, "Не открылась страница App");
 
             Assert.That(new AnyPage(driver)
                .ClickSearchMenuLnk()
+               .WaitForPageLoaded()
                .IsSearchPageOpened(), Is.True, "Не открылась страница Search");
 
             Assert.That(new AnyPage(driver)
                .ClickShowsMenuLnk()
+               .WaitForPageLoaded()
                .IsAllTabDisplayed(), Is.True, "Не открылась страница Shows");
         }
 
         [Test]
         public void ActorPageTest()
         {
-            string seriesTitle = "The Blacklist";
-            int actorsCount = 7;
-            string actorSpader = "James Spader";
-            string actorMarno = "Mozhan Marnò";
-            string actorTawfiq = "Hisham Tawfiq";
-            string actorBoone = "Megan Boone";
+            var seriesTitle = "The Blacklist";
+            var actorsCount = 7;
+            var actorSpader = "James Spader";
+            var actorMarno = "Mozhan Marnò";
+            var actorTawfiq = "Hisham Tawfiq";
+            var actorBoone = "Megan Boone";
 
             Assert.That(() => new AnyPage(driver)
-                .ClickShowsMenuLnk()            
+                .ClickShowsMenuLnk()
+                .WaitForPageLoaded()
                 .IsSeriesDisplayed(seriesTitle), Is.True.After(5 * 1000, 1000), $"Не отображается сериал: {seriesTitle}");
 
-            var _castpage = new ShowsPage(driver)
+            var castpage = new ShowsPage(driver)
                 .GoToSeriesPageByTitle(seriesTitle)
                 .ClickAddToFavorites()
-                .GoToCastPage();
+                .GoToCastPage()
+                .WaitForPageLoaded();
 
-            Assert.That(_castpage.GetActorsCount(), Is.EqualTo(actorsCount), "Не совпало количество актёров");
-            Assert.That(_castpage.IsActorDisplayed(actorSpader), Is.True, $"Не отображается актер: {actorSpader}");
-            Assert.That(_castpage.IsActorDisplayed(actorMarno), Is.True, $"Не отображается актер: {actorMarno}");
-            Assert.That(_castpage.IsActorDisplayed(actorTawfiq), Is.True, $"Не отображается актер: {actorTawfiq}");
+            Assert.That(() => castpage.GetActorsCount(), Is.EqualTo(actorsCount).After(5000, 1000), "Не совпало количество актёров");
+            Assert.That(castpage.IsActorDisplayed(actorSpader), Is.True, $"Не отображается актер: {actorSpader}");
+            Assert.That(castpage.IsActorDisplayed(actorMarno), Is.True, $"Не отображается актер: {actorMarno}");
+            Assert.That(castpage.IsActorDisplayed(actorTawfiq), Is.True, $"Не отображается актер: {actorTawfiq}");
 
-            _castpage.GoToActorPage(actorBoone);
+            castpage.GoToActorPage(actorBoone).WaitForPageLoaded();
 
             Assert.That(new ActorPage(driver)
                 .ClickMore()

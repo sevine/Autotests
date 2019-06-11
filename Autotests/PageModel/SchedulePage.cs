@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Autotests.PageModel
 {
-    class SchedulePage : BasePage
+    public class SchedulePage : AnyPage
     {
         public SchedulePage(IWebDriver driver) : base(driver)
         {
@@ -15,6 +15,12 @@ namespace Autotests.PageModel
 
         private const string cmpCalendar = ".schedule__days";
 
-        public bool IsSchedulePageOpened() => _driver.FindElements(By.CssSelector(cmpCalendar)).Count > 0;
+        public bool IsSchedulePageOpened() => WaitForElementPresent(By.CssSelector(cmpCalendar)) != null;
+
+        public new SchedulePage WaitForPageLoaded()
+        {
+            base.WaitForPageLoaded();
+            return this;
+        }
     }
 }

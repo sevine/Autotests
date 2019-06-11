@@ -1,5 +1,6 @@
 ﻿using Autotests.PageModel.IndexPage;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading;
 
 namespace Autotests.PageModel.BaseElements
 {
-    class AnyPage : BasePage
+    public class AnyPage : BasePage
     {
         const string nbcIndexPage = "https://www.nbc.com/";
 
@@ -20,7 +21,7 @@ namespace Autotests.PageModel.BaseElements
         private const string lnkShows = "a[href='/shows']";
         private const string lnkEpisodes = "a[href='/video']";
         private const string lnkSchedule = "a[href='/schedule']";
-        private const string lnkNewsAndSports = "//span[contains(text(), 'Sport')]/..";
+        private const string lnkNewsAndSports = ".navigation__item.navigation__item--group";
         private const string lnkShop = "//span[contains(text(), 'Shop')]/..";
         private const string lnkApp = "a[href='/apps']";
         private const string lnkSearch = "//button[@class='navigation__search navigation__item__title']";
@@ -29,58 +30,76 @@ namespace Autotests.PageModel.BaseElements
         #region ClickMethods
         public ShowsPage ClickShowsMenuLnk()
         {
-            _driver.FindElement(By.CssSelector(lnkShows)).Click();
-            Thread.Sleep(5 * 1000);
+            _driver.FindElement(By.CssSelector(lnkShows)).Click();            
             return new ShowsPage(_driver);
         }
 
         public EpisodesPage ClickEpisodesMenuLnk()
         {
             _driver.FindElement(By.CssSelector(lnkEpisodes)).Click();
-            Thread.Sleep(5 * 1000);
             return new EpisodesPage(_driver);
         }
 
         public SchedulePage ClickScheduleMenuLnk()
         {
             _driver.FindElement(By.CssSelector(lnkSchedule)).Click();
-            Thread.Sleep(5 * 1000);
             return new SchedulePage(_driver);
         }
 
         public NewsAndSportsPage ClickNewsAndSportsMenuLnk()
         {
-            _driver.FindElement(By.XPath(lnkNewsAndSports)).Click();
-            Thread.Sleep(5 * 1000);
+            _driver.FindElement(By.CssSelector(lnkNewsAndSports)).Click();
             return new NewsAndSportsPage(_driver);
         }
 
         public ShopPage ClickShopMenuLnk()
         {
             _driver.FindElement(By.XPath(lnkShop)).Click();
-            Thread.Sleep(5 * 1000);
             return new ShopPage(_driver);
         }
 
         public AppPage ClickAppMenuLnk()
         {
             _driver.FindElement(By.CssSelector(lnkApp)).Click();
-            Thread.Sleep(5 * 1000);
             return new AppPage(_driver);
         }
 
         public SearchPage ClickSearchMenuLnk()
         {
             _driver.FindElement(By.XPath(lnkSearch)).Click();
-            Thread.Sleep(5 * 1000);
             return new SearchPage(_driver);
         }
 
         public NbcIndexPage GoToIndexPage()
         {
             _driver.Navigate().GoToUrl(nbcIndexPage);
-            Thread.Sleep(5 * 1000);
             return new NbcIndexPage(_driver);
+        }
+        #endregion
+
+        #region AssertMethods
+        public bool IsElementPresent(By locator) => _driver.FindElements(locator).Count > 0;
+        #endregion
+
+        #region DoMethods
+        public IWebElement WaitForElementPresent(By locator, int maxTimeOfWaiting = 15)
+        {
+            new WebDriverWait(_driver, TimeSpan.FromSeconds(maxTimeOfWaiting))
+                .Until(q => IsElementPresent(locator));
+            return _driver.FindElement(locator);
+        }
+
+        public AnyPage WaitForElementNotPresent(By locator, int maxTimeOfWaiting = 15)
+        {
+            new WebDriverWait(_driver, TimeSpan.FromSeconds(maxTimeOfWaiting))
+                .Until(q => !IsElementPresent(locator));
+            return this;
+        }
+
+        public AnyPage WaitForPageLoaded()
+        {
+            WaitForElementNotPresent(By.CssSelector(".basic-loading-page .basic-loading-page--show-page"));
+            return this;
         }
         #endregion
     }

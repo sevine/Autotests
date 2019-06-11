@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Autotests.PageModel
 {
-    public class ActorPage : BasePage
+    public class ActorPage : AnyPage
     {
         public ActorPage (IWebDriver driver) : base(driver)
         {
@@ -22,13 +22,12 @@ namespace Autotests.PageModel
         #region DoMethods
         public ActorPage ClickMore()
         {
-            _driver.FindElement(By.CssSelector(btnMore)).Click();
+            WaitForElementPresent(By.CssSelector(btnMore)).Click();
             return WaitForPageLoaded();
         }
 
         public ActorPage WaitForPageLoaded()
         {
-            Thread.Sleep(2 * 1000);
             return this;
         }
         #endregion
